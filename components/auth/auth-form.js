@@ -46,6 +46,8 @@ function AuthForm() {
         password: enteredPassword,
       })
 
+      console.log(result)
+
       if (!result.error) {
         router.replace('/profile')
       }

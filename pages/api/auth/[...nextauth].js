@@ -30,8 +30,20 @@ export default NextAuth({
           throw new Error('Could not log you in!')
         }
         client.close()
-        return { email: user.email }
+        return { email: user.email, role: 'admin' }
       },
     }),
   ],
+  callbacks: {
+    async jwt(token, user, account, profile, isNewUser) {
+      if (user) {
+        token.role = user.role
+      }
+      return token
+    },
+    async session(session, token) {
+      session.user.role = token.role
+      return session
+    },
+  },
 })
